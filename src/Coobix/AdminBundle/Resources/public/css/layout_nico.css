@@ -1,0 +1,45 @@
+.inputLargo {
+	width: 400px;
+	height: 25px;
+	margin-bottom: 1px;
+}
+
+.field_widget input.inputCorto ,.inputCorto {
+	width: 100px;
+	height: 25px;
+	margin-bottom: 1px;
+}
+
+.titItems {
+	text-align: center;
+}
+
+.precioSubtotal {
+    border: 1px solid;
+    width: 125px;
+}
+
+
+.precioTotal {
+    border: 1px solid;
+    width: 121px;
+}
+
+.signo_peso {
+	float: left;
+	margin: 10px 0 0 2px;
+}
+
+.precioEntrega {
+    border: 1px solid;
+    width: 204px;
+}
+
+.NdisplayNone {
+	display: none;
+}
+
+.NvisibilityHidden {
+	visibility: hidden;
+}
+
