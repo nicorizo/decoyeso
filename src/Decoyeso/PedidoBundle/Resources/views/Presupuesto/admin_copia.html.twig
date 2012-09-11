@@ -1,0 +1,197 @@
+{% extends "CoobixAdminBundle:Default:new.html.twig" %}
+
+
+
+{% block breadcrumb_in %}
+
+{% endblock breadcrumb_in %} 
+
+{%block main_path%}
+
+	
+	{% if entity.pedido %}
+		<ul>
+			<li><a class="btn_back_to_list txt16 txt_green" href="{{ path('cliente_edit',{'id':entity.pedido.cliente.id}) }}">Cliente: {{entity.pedido.cliente}}</a></li>
+			<li> > <a class="btn_back_to_list txt16 txt_green" href="{{ path('pedido_edit',{'id':entity.pedido.id}) }}">Pedido: {{entity.pedido.numero}}, {{entity.pedido.obra}}</a></li>
+			<li> > <a class="btn_back_to_list txt16 txt_green" href="{{ path('presupuesto_edit',{'id':entity.id}) }}">Presupuesto:{{ entity.numero }}</a></li>
+			<li> > <a class="btn_back_to_list txt16 txt_green" href="{{ path('presupuesto_copia',{'id':entity.id}) }}">Crear Presupuesto</a></li>
+		</ul>
+	{% endif %}	
+		
+{%endblock main_path%}
+
+{% block module_tit %}
+Crear Presupuesto
+{% endblock module_tit %}
+
+
+{% block form_content %}
+		{% block errorMsj %}{% endblock errorMsj %}
+		
+		
+		
+		
+		
+		<form action="{% block create_path %}{{ path('presupuesto_create') }}{% endblock create_path %}" method="post" id="presupuestoForm" {{ form_enctype(form) }}>
+		<div class="formPresupuestoCont">
+		{{ form_errors(form) }}
+		<br>
+
+		
+	<br>	
+	
+		
+		
+	
+	
+		{% form_theme form 'CoobixAdminBundle:Form:Fields.html.twig' %}
+		
+		{{ form_errors(form.mostrarPreciosUnitarios) }}
+		{{ form_row(form.mostrarPreciosUnitarios) }}
+		
+		{{ form_errors(form.pedido) }}
+		{{ form_row(form.pedido) }}
+		
+		<div class="fix"><br><br><br></div>
+				
+		<table>
+		
+			<tr>
+				<td class="titItems txt3">DESIGNACION</td>
+				<td class="titItems txt3">UNIDAD</td>
+				<td class="titItems txt3 NtdCantidad">CANTIDAD</td>
+				<td class="titItems txt3 NtdPrecioUnitario">PRECIO UNIT.</td>
+				<td class="titItems txt3">PRECIO TOTAL</td>
+			</tr>
+			
+			{% set items = entity.getItems %}
+	
+			{% set i = 0 %}
+			{% for item in items %}
+			 
+			<tr class="presupuestoItems">
+				<td class="item1">
+				<input type="text" value="{{ item.designacion }}" name="designacion_{{ i }}" class="inputLargo">
+				</td>
+				<td class="item2">
+				<input type="text" value="{{ item.unidad }}" name="unidad_{{ i }}" class="inputCorto">
+				</td>
+				<td class="item3">
+				<input type="text" value="{{ item.cantidad }}" name="cantidad_{{ i }}" class="inputCorto inputCantidad">
+				</td>
+				<td class="item4">
+				<input type="text" value="{{ item.precioUnitario }}" name="precioUnitario_{{ i }}" class="inputCorto precioUnitario">
+				</td>
+				<td class="item5">
+				<input type="text" value="{{ item.precioTotal }}" name="precioTotal_{{ i }}" class="inputCorto inputPrecioTotal">
+				</td>
+			</tr>
+			{% set i = i + 1 %}
+	 		{% endfor %}	
+		</table>
+		
+		<div class="fix"></div>
+	<br/>
+	<div class="fix"></div>
+	<table class="presupuestoSubTotal">
+			<tr class="presupuestoTits">
+				<td class="titSubtotal"><span class="txt3">SUBTOTAL</span> </td>
+				<td class="precioSubtotal">
+				
+					<span class="txt3 signo_peso">$</span>
+					<span class="txt3">
+				
+					{{ form_errors(form.subTotal) }}
+					{{ form_widget(form.subTotal) }}
+
+					</span> </td>			
+			</tr>
+	</table>
+	
+<div class="fix"></div>
+	<br/>
+	<div class="fix"></div>
+	
+	<div class="fix"></div>
+	<table class="presupuestoTotal">
+			<tr class="presupuestoTits">
+				<td class="titTotal"><span class="txt3">TOTAL</span> </td>
+				<td class="precioTotal">
+					<span class="txt3 signo_peso">$</span>
+					<span class="txt3">
+						{{ form_errors(form.total) }}
+						{{ form_widget(form.total) }}
+					
+
+				</span> </td>			
+			</tr>
+	</table>
+	
+		<div class="fix"></div>
+		<br/>
+	<table class="presupuestoEntrega">
+			<tr class="presupuestoTits">
+				<td class="titEntrega"><span class="txt3">ENTREGA EN EFECTIVO</span> </td>
+				<td class="precioEntrega">
+				{{ form_errors(form.precioEntrega) }}
+				<span class="txt3 signo_peso">$</span>
+							
+				{{ form_widget(form.precioEntrega) }}
+				
+				 </td>
+				<td class="precioTextoEntrega"><span class="txt3">
+				{{ form_errors(form.precioTextoEntrega) }}{{ form_widget(form.precioTextoEntrega) }}
+				
+				</span> </td>		
+			</tr>
+			
+			<tr class="presupuestoTits">
+				<td class="titEntrega"><span class="txt3">SALDO</span> </td>
+				<td class="precioEntrega">
+				{{ form_errors(form.precioSaldo) }}
+				<span class="txt3 signo_peso">$</span>
+				{{ form_widget(form.precioSaldo) }}
+				 </td>
+				<td class=""></td>		
+			</tr>
+			
+			
+	</table>
+	
+	<br/><br/>
+
+
+	<table class="presupuestoEntrega">
+			<tr class="">
+				<td class=""><span class="txt3">FORMA DE PAGO: {{ form_errors(form.formaPago) }}{{ form_widget(form.formaPago) }}</span> </td>
+					
+			</tr>
+	</table>
+	
+{{ form_row(form._token) }}
+	</div>	
+		
+		<div class="fix"></div>
+		<p>
+			<button class="btn_green_button right" type="submit">Guardar cambios</button>
+		</p>
+		<ul class="form_record_actions">
+		
+		</ul>
+
+		
+		
+		
+		
+		<div class="fix"></div>
+		
+		
+		</form>
+		{% endblock form_content %}
+
+
+{% block list_path %}{{ path('presupuesto') }}{% endblock list_path %}
+
+{% block javascript_extra %}
+	<script type="text/javascript" src="{{ asset('bundles/pedido/js/presupuesto.js') }}" /></script>
+{% endblock javascript_extra %}
